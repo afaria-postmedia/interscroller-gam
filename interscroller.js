@@ -2,42 +2,52 @@
   /**
    *  Constants
    */
-
   // Component name
   const NAME = 'interscroller';
 
   // Version
-  const VERSION = '1.37';
+  const VERSION = '1.40';
 
   // Flag for dev mode
   const IS_DEV = true;
 
-  // Flag for stretching bg height
-  const STRETCH_BG_HEIGHT = true;
+  // Defined widths
+  const WIDTH_DESKTOP = 1000;
+  const WIDTH_MOBILE_TABLET = 300;
+
+  // Defined heights
+  const HEIGHT_DESKTOP = 700;
+  const HEIGHT_MOBILE_TABLET = 600;
+
+  // Placeholder
+  const PLACEHOLDER_IMAGE_COLOR = '000000';
+  const PLACEHOLDER_BG_COLOR = 'ff0000';
 
   /**
    *  Global vars
    *
    *  imageUrl        {URL}   the desktop creative image url -> [%image_url%]
-   *  mobileIMageUrl  {URL}   the mobile/tablet creative image url -> [%mobile_image_url%]
+   *  mobileImageUrl  {URL}   the mobile/tablet creative image url -> [%mobile_image_url%]
    *  bgColor         {Text}  the background color hex -> [%bg_color%]
    *  clickUrl        {URL}   the url to go to when the ad is clicked -> [%click_url%]
+   *  forceHeight     {List}  whether to stretch the height of the image (yes/no) -> [%force_height%]
    *
    *  iframe          {HTMLElement}   the <iframe> element where the ad is served
    *  viewpoint       {HTMLElement}   the <div> that contains the above iframe
    */
-  var imageUrl, mobileImageUrl, bgColor, clickUrl, iframe, viewport;
+  var imageUrl, mobileImageUrl, bgColor, clickUrl, forceHeight, iframe, viewport;
 
   /**
    *  If dev mode, load pre-defined values
    */
   if (IS_DEV) {
     imageUrl =
-      'http://via.placeholder.com/1000x700/000000/ffffff?text=1000%20x%20700';
+      'http://via.placeholder.com/' + WIDTH_DESKTOP + 'x' + HEIGHT_DESKTOP + '/' + PLACEHOLDER_IMAGE_COLOR + '/ffffff?text=' + WIDTH_DESKTOP + '%20x%20' + HEIGHT_DESKTOP;
     mobileImageUrl =
-      'http://via.placeholder.com/300x600/000000/ffffff?text=300%20x%20600';
-    bgColor = '#ff0000';
+      'http://via.placeholder.com/' + WIDTH_MOBILE_TABLET + 'x' + HEIGHT_MOBILE_TABLET + '/' + PLACEHOLDER_IMAGE_COLOR + '/ffffff?text=' + WIDTH_MOBILE_TABLET + '%20x%20' + HEIGHT_MOBILE_TABLET;
+    bgColor = '#' + PLACEHOLDER_BG_COLOR;
     clickUrl = 'https://nationalpost.com';
+    forceHeight = 'no';
 
     /**
      *  If production, load values from GAM variables
@@ -47,6 +57,7 @@
     mobileImageUrl = '[%mobile_image_url%]';
     bgColor = '[%bg_color%]';
     clickUrl = '[%click_url%]';
+    forceHeight = '[%force_height%]';
   }
 
   /**
@@ -80,14 +91,14 @@
      *  Viewport styles
      */
     addStyles(viewport, {
-      height: (!isDesktop() ? 600 : 700) + 'px',
+      height: (!isDesktop() ? HEIGHT_MOBILE_TABLET : HEIGHT_DESKTOP) + 'px',
       backgroundImage: 'url(' + (!isDesktop() ? mobileImageUrl : imageUrl) + ')'
     });
   }
 
   /**
    *  isValid
-   *  @description determine if desktop based on window size
+   *  @description determine whether the component can be init or not
    *  @return boolean
    */
   function isValid() {
@@ -140,7 +151,7 @@
       background:
         (bgColor !== '' ? bgColor + ' ' : '') +
         'no-repeat fixed center center' +
-        (STRETCH_BG_HEIGHT ? ' / contain' : '')
+        (forceHeight && forceHeight === 'yes' ? ' / contain' : '')
     });
 
     /**
