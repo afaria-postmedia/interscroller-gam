@@ -6,7 +6,7 @@
   const NAME = 'interscroller';
 
   // Version
-  const VERSION = '1.40';
+  const VERSION = '1.41';
 
   // Flag for dev mode
   const IS_DEV = true;
@@ -91,6 +91,7 @@
      *  Viewport styles
      */
     addStyles(viewport, {
+      width: window.parent.innerWidth + 'px',
       height: (!isDesktop() ? HEIGHT_MOBILE_TABLET : HEIGHT_DESKTOP) + 'px',
       backgroundImage: 'url(' + (!isDesktop() ? mobileImageUrl : imageUrl) + ')'
     });
