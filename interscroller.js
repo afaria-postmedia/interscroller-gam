@@ -6,10 +6,13 @@
   const NAME = 'interscroller';
 
   // Version
-  const VERSION = '1.41';
+  const VERSION = '1.43';
 
   // Flag for dev mode
-  const IS_DEV = true;
+  const IS_DEV = false;
+
+  // Selector
+  const IFRAME_SELECTOR = '#ad__inner-2 iframe';
 
   // Defined widths
   const WIDTH_DESKTOP = 1000;
@@ -120,8 +123,13 @@
    *  @description assign main elements to global vars
    */
   function setElements() {
-    iframe = window.parent.document.querySelector('.ad iframe');
+    iframe = window.parent.document.querySelector(IFRAME_SELECTOR);
     viewport = iframe.parentElement;
+
+    /**
+     *  Force iframe height 100%
+     */
+    iframe.style.height = '100%';
   }
 
   /**
@@ -138,11 +146,6 @@
      *  Set main elements
      */
     setElements();
-
-    /**
-     *  Force iframe height 100%
-     */
-    iframe.style.height = '100%';
 
     /**
      *  Add styles
