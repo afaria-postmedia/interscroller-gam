@@ -6,7 +6,7 @@
   const NAME = 'interscroller';
 
   // Version
-  const VERSION = '1.43';
+  const VERSION = '1.44';
 
   // Flag for dev mode
   const IS_DEV = false;
@@ -59,7 +59,7 @@
     imageUrl = '[%image_url%]';
     mobileImageUrl = '[%mobile_image_url%]';
     bgColor = '[%bg_color%]';
-    clickUrl = '[%click_url%]';
+    clickUrl = '%%CLICK_URL_UNESC%%[%click_url%]';
     forceHeight = '[%force_height%]';
   }
 
