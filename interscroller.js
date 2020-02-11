@@ -6,13 +6,13 @@
   const NAME = 'interscroller';
 
   // Version
-  const VERSION = '1.44';
+  const VERSION = '1.47';
 
   // Flag for dev mode
   const IS_DEV = false;
 
   // Selector
-  const IFRAME_SELECTOR = '#ad__inner-2 iframe';
+  const IFRAME_SELECTOR = '[data-ad-interscroller] iframe';
 
   // Defined widths
   const WIDTH_DESKTOP = 1000;
@@ -70,9 +70,9 @@
    *  @param styles - object containing style props
    */
   function addStyles(el, styles) {
-    for (const key in styles) {
+    for (var key in styles) {
       if (styles.hasOwnProperty(key)) {
-        const style = styles[key];
+        var style = styles[key];
         el.style[key] = style;
       }
     }
@@ -140,7 +140,7 @@
     /**
      *  Logging, if dev ..
      */
-    if (IS_DEV) console.log('Init ' + NAME + ' v' + VERSION);
+    console.log('Init ' + NAME + ' v' + VERSION);
 
     /**
      *  Set main elements
@@ -164,7 +164,7 @@
     if (clickUrl !== '') {
       var link = document.createElement('a');
       link.setAttribute('href', clickUrl);
-      link.setAttribute('target', '_top');
+      link.setAttribute('target', '_blank');
       link.setAttribute('style', 'display:block;height:100%;');
       document.body.appendChild(link);
     }
